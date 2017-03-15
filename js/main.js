@@ -8,7 +8,7 @@ function init() {
     currentSection = $('#saludo');
     $('#btn-saludo').click(onClickBtnSaludo);
     $('#btn-nombres').click(onClickBtnNombre);
-    //gotoSection('juego');
+    gotoSection('juego');
 }
 
 function onClickBtnSaludo() {
@@ -91,7 +91,7 @@ var board = getInitialBoard("");
 function clearPlayingArea(xCordinate, yCordinate) {
     context.fillStyle = "rgba(250, 130, 130, 0.6)";
     context.fillRect(xCordinate, yCordinate, sectionSize, sectionSize);
-    console.log(xCordinate, yCordinate);
+    //console.log(xCordinate, yCordinate);
 
     /*var position = [[{x: 0,y: 0}, {x: 160,y: 0}, {x: 320,y: 0}],
                     [{x: 0,y: 160}, {x: 160,y: 160}, {x: 320,y: 160}],
@@ -111,7 +111,6 @@ function clearPlayingArea(xCordinate, yCordinate) {
     var position9 = (320,320);*/
 
     //console.log(position[0]["2"].x,position[0]["2"].y)
-    winner(xCordinate, yCordinate);
 }
 
 
@@ -162,7 +161,7 @@ function addPlayingPiece(mouse) {
                 mouse.x >= xCordinate && mouse.x <= xCordinate + sectionSize &&
                 mouse.y >= yCordinate && mouse.y <= yCordinate + sectionSize
             ) {
-                clearPlayingArea(xCordinate, yCordinate);
+                //clearPlayingArea(xCordinate, yCordinate);
                 //console.log('x '+xCordinate + ' y '+yCordinate);
 
                 if (player === 1) {
@@ -170,6 +169,7 @@ function addPlayingPiece(mouse) {
                 } else {
                     drawO(xCordinate, yCordinate);
                 }
+                winner(xCordinate, yCordinate);
             }
         }
     }
@@ -202,21 +202,22 @@ canvas.addEventListener('mouseup', function (event) {
 /*----- Jugadas Ganadoras -----*/
 
 function winner(xCordinate, yCordinate){
-    var x,y,positionX=[],positionY=[],ex=[];
+    var x,y,positionX=[],positionY=[],ex=[],win;
     for (var i=0;i<3;i++){
         x = i*sectionSize;
         y = i*sectionSize;
         positionX.push(x);
         positionY.push(y);
     }
-    var position = [[{x: positionX[0],y: positionY[0], player:player}, {x: positionX[1],y: positionY[0],player:player}, {x: positionX[2],y: positionY[0],player:player}],
-                    [{x: positionX[0],y: positionY[1],player:player}, {x: positionX[1],y: positionY[1],player:player}, {x: positionX[2],y: positionY[1],player:player}],
-                    [{x: positionX[0],y: positionY[2],player:player}, {x: positionX[1],y: positionY[2],player:player}, {x: positionX[2],y: positionY[2],player:player}]
+    var position = [{x: positionX[0],y: positionY[0]}, {x: positionX[1],y: positionY[0]}, {x: positionX[2],y: positionY[0]},
+                    {x: positionX[0],y: positionY[1]}, {x: positionX[1],y: positionY[1]}, {x: positionX[2],y: positionY[1]},
+                    {x: positionX[0],y: positionY[2]}, {x: positionX[1],y: positionY[2]}, {x: positionX[2],y: positionY[2]}
                    ];
-    console.log(position);
-    if(player==1){
-        if(position[0]["0"].player === position[0]["1"].player){
-        console.log('gano: '+player);
+
+    for(i in position){
+        //console.log(position[0][i].x);
+            ex.push(position[i]);
     }
-    }
+    
+    console.log(ex);
 }
